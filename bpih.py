@@ -17,7 +17,7 @@ tab0.markdown(
     "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
     unsafe_allow_html=True
 )
-df = st.file_uploader("Upload Data Terbaru Disini", type=['xls', 'xlsx'])
+df = tab0.file_uploader("Upload Data Terbaru Disini", type=['xls', 'xlsx'])
 if df is not None:
     df = pd.read_excel(df)
 
