@@ -10,8 +10,8 @@ tab0, tab1, tab2, tab3 = st.tabs(["Dashboard", "Regional Analysis", "AI Predicti
 # ----- Statistik -----
 col1, col2, col3, col4 = tab0.columns(4)
 with col1:
-    tab0.markdown("#### 🔥 Biaya Haji 2025")
-    tab0.metric("Rp", "52.000.000", "+9.5%")
+    #tab0.markdown("#### 🔥 Biaya Haji 2025")
+    tab0.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True)
     
 tab0.markdown(
     "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
