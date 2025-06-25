@@ -7,6 +7,12 @@ st.set_page_config(layout="wide")
 
 tab0, tab1, tab2, tab3 = st.tabs(["Dashboard", "Regional Analysis", "AI Predictions", "Data Documentation"])
 
+# ----- Statistik -----
+col1, col2, col3, col4 = tab0.columns(4)
+with col1:
+    st.markdown("#### 🔥 Biaya Haji 2025")
+    st.metric("Rp", "52.000.000", "+9.5%")
+    
 tab0.markdown(
     "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
     unsafe_allow_html=True
@@ -18,8 +24,7 @@ if df is not None:
     # Group by year, take mean of bipih and nm
     df["tahun"] = df["tahun"].astype(str)
     df_grouped = df.groupby("tahun")[["bipih", "nm"]].mean().reset_index()
-    df_grouped
-    
+
     # Optional: convert values to millions for readability
     df_grouped["bipih_mio"] = df_grouped["bipih"] / 1e6
     df_grouped["nm_mio"] = df_grouped["nm"] / 1e6
