@@ -6,5 +6,9 @@ st.set_page_config(layout="wide")
 
 tab0, tab1, tab2, tab3 = st.tabs(["Dashboard", "Regional Analysis", "AI Predictions", "Data Documentation"])
 
-tab0.title(':bar_chart: Data Historis dan Proyeksi BPIH')
+tab0.markdown(
+    "<h1 style='font-size:50px; color:#4CAF50;'>📊 Dashboard BPIH</h1>",
+    unsafe_allow_html=True
+)
+
 
