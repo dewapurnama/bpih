@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 tab0, tab1, tab2, tab3 = st.tabs(["Dashboard", "Regional Analysis", "AI Predictions", "Data Documentation"])
 
 # ----- Statistik -----
-col1, col2, col3, col4 = tab0.columns(4)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     #tab0.markdown("#### 🔥 Biaya Haji 2025")
     tab0.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True)
