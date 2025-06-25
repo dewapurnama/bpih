@@ -11,7 +11,7 @@ with tab0:
     # ----- Statistik -----
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True, help="tes tooltip")
+        st.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True, label_visibility="visible")
     with col2:
         st.metric("📊 CAGR 2016-2025", "5.6%", "", border=True)
     with col3:
