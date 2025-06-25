@@ -7,15 +7,17 @@ st.set_page_config(layout="wide")
 
 tab0, tab1, tab2, tab3 = st.tabs(["Dashboard", "Regional Analysis", "AI Predictions", "Data Documentation"])
 
-# ----- Statistik -----
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    #tab0.markdown("#### 🔥 Biaya Haji 2025")
-    tab0.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True)
-
-with col2:
-    #tab0.markdown("#### 🔥 Biaya Haji 2025")
-    tab0.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True)
+with tab0:
+    # ----- Statistik -----
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True)
+    with col2:
+        st.metric("📊 CAGR 2016-2025", "5.6%", "", border=True)
+    with col3:
+        st.metric("🟣 Growth Normal", "8.5%", "", border=True)
+    with col4:
+        st.metric("📍 Jakarta 2026", "Rp 58.242.366", "Confidence: 90%", border=True)
     
 tab0.markdown(
     "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
