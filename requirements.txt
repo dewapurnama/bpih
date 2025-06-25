@@ -1,0 +1,7 @@
+pydrive
+pandas
+openpyxl
+streamlit
+selenium
+gdown
+plotly.express
