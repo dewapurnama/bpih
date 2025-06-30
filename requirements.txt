@@ -6,3 +6,4 @@ selenium
 gdown
 plotly.express
 streamlit_option_menu
+numpy
