@@ -271,7 +271,7 @@ with tab0:
         fig2.update_layout(
             barmode='stack',
             title=dict(
-                text="Komposisi BPIH per Tahun (Dalam Persen)", x=0.5, font=dict(size=18)
+                text="Komposisi BPIH per Tahun (Dalam Persen)", xanchor='center', x=0.5, font=dict(size=18)
             ),
             xaxis_title="Tahun",
             yaxis_title="Persentase (%)",
