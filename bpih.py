@@ -50,6 +50,9 @@ with tab0:
         st.metric("📍 Jakarta 2026", "Rp 58.242.366", "Confidence: 90%", border=True)
 
 with tab0:
+    # Average BIPIH per year across all embarkasi
+    df_avg_year = df.groupby('tahun')[["kurs_usd", "kurs_sar", 'bpih', 'bipih', 'nm', "bpih_pesawat", "bpih_akom_mak", 
+                                   "bpih_akom_mad", "bpih_lainnya"]].mean().reset_index()
     cagr_dict = {}
     component_cols = df_avg_year.columns.difference(['bpih', 'tahun'])
     
