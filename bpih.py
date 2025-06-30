@@ -41,13 +41,13 @@ with tab0:
     # ----- Statistik -----
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("🔥 Biaya Haji 2025", "Rp 52.000.000", "+9.5%", border=True, help="tes_tooltip", label_visibility="visible")
+        st.metric("🔥 Biaya Haji 2025", "Rp 89.410.259", "+9.5%", border=True, help="tes_tooltip", label_visibility="visible")
     with col2:
-        st.metric("📊 CAGR 2016-2025", "5.6%", "", border=True)
+        st.metric("📊 CAGR 2015-2025", "5.6%", "", border=True)
     with col3:
         st.metric("🟣 Growth Normal", "8.5%", "", border=True)
     with col4:
-        st.metric("📍 Jakarta 2026", "Rp 58.242.366", "Confidence: 90%", border=True)
+        st.metric("📍 Jakarta 2026", "Rp 93.577.403", "Confidence: 90%", border=True)
 
 with tab0:
     # Average BIPIH per year across all embarkasi
