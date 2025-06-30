@@ -144,8 +144,14 @@ with tab0:
     
     fig.update_xaxes(
         tickmode='array',
-        tickvals=all_years
+        tickvals=all_years,
+        type='category'
     )
+
+    fig.update_yaxes(
+    tickformat=',',  # Use comma separator
+    tickvals=[x for x in range(0, int(df_avg_year['bpih'].max()*1.2), 5000000)],  # adjust as needed
+    ticktext=[f'{int(x/1e6)}jt' for x in range(0, int(df_avg_year['bpih'].max()*1.2), 5000000)])
     
     # Layout
     fig.update_layout(
