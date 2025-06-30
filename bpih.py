@@ -245,7 +245,7 @@ with tab0:
             template="seaborn"
         )
         
-    st.plotly_chart(fig1, use_container_width=True, height=200, key="bpih_left")
+        st.plotly_chart(fig1, use_container_width=True, height=200, key="bpih_left")
     with col2:
         # Group by year, take mean of bipih and nm
         df["tahun"] = df["tahun"].astype(str)
@@ -315,4 +315,4 @@ with tab0:
             template="seaborn"
         )
         
-    st.plotly_chart(fig2, use_container_width=True, height=200, key="bpih_right")
+        st.plotly_chart(fig2, use_container_width=True, height=200, key="bpih_right")
