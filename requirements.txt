@@ -7,4 +7,4 @@ gdown
 plotly.express
 streamlit_option_menu
 numpy
-sklearn.linear_model
+scikit_learn
