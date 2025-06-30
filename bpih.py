@@ -47,7 +47,7 @@ with tab0:
     with col3:
         st.metric("🟣 Growth Normal", "8.5%", "", border=True)
     with col4:
-        st.metric("📍 Jakarta 2026", "Rp 93.577.403", "Confidence: 90%", border=True)
+        st.metric("📍 BPIH 2026", "Rp 93.577.403", "Confidence: 90%", border=True)
 
 with tab0:
     # Average BIPIH per year across all embarkasi
