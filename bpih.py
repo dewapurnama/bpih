@@ -113,7 +113,6 @@ with tab0:
     
     # --- 5. Combine into DataFrame and print ---
     df_proj = pd.DataFrame(predictions, columns=['tahun', 'bpih_predicted'])
-    import matplotlib.pyplot as plt
 
     fig = go.Figure()
 
