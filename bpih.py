@@ -139,7 +139,7 @@ with tab0:
     ))
     
     # Set all years on the x-axis
-    all_years = list(df_avg_year['tahun'].unique()) + list(df_proj['tahun'].unique())
+    all_years = sorted(set(df_avg_year['tahun'].dropna().tolist() + df_proj['tahun'].dropna().tolist()))
     all_years = sorted(set(all_years))
     
     fig.update_xaxes(
