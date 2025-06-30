@@ -2,6 +2,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import plotly.graph_objs as go
 import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
 
 st.set_page_config(layout="wide")
 
@@ -48,6 +50,104 @@ with tab0:
         st.metric("📍 Jakarta 2026", "Rp 58.242.366", "Confidence: 90%", border=True)
 
 with tab0:
+    cagr_dict = {}
+    component_cols = df_avg_year.columns.difference(['bpih', 'tahun'])
+    
+    for col in component_cols:
+        valid_data = df_avg_year[['tahun', col]].dropna()
+        valid_data = valid_data[valid_data[col] > 0]
+    
+        if len(valid_data) < 2:
+            cagr_dict[col] = 0.0
+            continue
+    
+        if col == 'bipih_living_cost':
+            # Use average annual growth (AAGR)
+            growth_rates = valid_data[col].pct_change().dropna()
+            avg_growth = growth_rates.mean()
+            cagr_dict[col] = avg_growth
+        else:
+            # Use CAGR
+            start_year = int(valid_data.iloc[0]['tahun'])
+            end_year = int(valid_data.iloc[-1]['tahun'])
+            start_val = valid_data.iloc[0][col]
+            end_val = valid_data.iloc[-1][col]
+            n_years = end_year - start_year
+    
+            if n_years > 0 and start_val > 0:
+                cagr = (end_val / start_val) ** (1 / n_years) - 1
+                cagr_dict[col] = cagr
+            else:
+                cagr_dict[col] = 0.0
+    
+    # --- 2. Train multivariate regression model ---
+    X_multi = df_avg_year.drop(columns=['bpih', 'tahun'])
+    y_multi = df_avg_year['bpih']
+    model_multi = LinearRegression().fit(X_multi, y_multi)
+    
+    # --- 3. Project component values for 2025–2030 ---
+    end_year = int(df_avg_year['tahun'].max())
+    base_components = df_avg_year[df_avg_year['tahun'] == end_year][component_cols].iloc[0]
+    future_years = list(range(end_year + 1, 2031))
+    
+    projected_components_list = []
+    
+    for year in future_years:
+        years_ahead = year - end_year
+        projected_components = {
+            col: base_components[col] * ((1 + cagr_dict[col]) ** years_ahead)
+            for col in component_cols
+        }
+        projected_components_list.append((year, projected_components))
+    
+    # --- 4. Predict BPIH for each projected year ---
+    predictions = []
+    
+    for year, comp_dict in projected_components_list:
+        input_df = pd.DataFrame([comp_dict])[X_multi.columns]  # enforce column order
+        pred_bpih = model_multi.predict(input_df)[0]
+        predictions.append((year, pred_bpih))
+    
+    # --- 5. Combine into DataFrame and print ---
+    df_proj = pd.DataFrame(predictions, columns=['tahun', 'bpih_predicted'])
+    import matplotlib.pyplot as plt
+
+    fig = go.Figure()
+
+    # === Actual BPIH ===
+    fig.add_trace(go.Scatter(
+        x=df_avg_year['tahun'],
+        y=df_avg_year['bpih'],
+        mode='lines+markers+text',
+        name='Actual BPIH',
+        text=[f"{val:,.0f}" for val in df_avg_year['bpih']],
+        textposition='top center',
+        line=dict(color='green')
+    ))
+    
+    # === Predicted BPIH ===
+    fig.add_trace(go.Scatter(
+        x=df_proj['tahun'],
+        y=df_proj['bpih_predicted'],
+        mode='lines+markers+text',
+        name='Predicted BPIH',
+        text=[f"{val:,.0f}" for val in df_proj['bpih_predicted']],
+        textposition='top center',
+        line=dict(dash='dash', color='blue')
+    ))
+    
+    fig.update_layout(
+        title='Prediksi BPIH (Multivariate Linear Regression + Proyeksi Komponen)',
+        xaxis_title='Tahun',
+        yaxis_title='BPIH (Rupiah)',
+        yaxis_tickformat=',',
+        legend=dict(x=0.01, y=0.99),
+        hovermode='x unified',
+        height=500
+    )
+    
+    st.plotly_chart(fig, use_container_width=True, height=200)
+
     # Group by year, take mean of bipih and nm
     df["tahun"] = df["tahun"].astype(str)
     df_grouped = df.groupby("tahun")[["bipih", "nm"]].mean().reset_index()
