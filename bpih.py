@@ -114,38 +114,46 @@ with tab0:
     # --- 5. Combine into DataFrame and print ---
     df_proj = pd.DataFrame(predictions, columns=['tahun', 'bpih_predicted'])
 
+    # Create the figure
     fig = go.Figure()
-
-    # === Actual BPIH ===
+    
+    # Actual BPIH
     fig.add_trace(go.Scatter(
         x=df_avg_year['tahun'],
         y=df_avg_year['bpih'],
         mode='lines+markers+text',
         name='Actual BPIH',
-        text=[f"{val:,.0f}" for val in df_avg_year['bpih']],
-        textposition='top center',
-        line=dict(color='green')
+        text=df_avg_year['bpih'].round(0),
+        textposition='top center'
     ))
     
-    # === Predicted BPIH ===
+    # Predicted BPIH
     fig.add_trace(go.Scatter(
         x=df_proj['tahun'],
         y=df_proj['bpih_predicted'],
         mode='lines+markers+text',
         name='Predicted BPIH',
-        text=[f"{val:,.0f}" for val in df_proj['bpih_predicted']],
+        text=df_proj['bpih_predicted'].round(0),
         textposition='top center',
-        line=dict(dash='dash', color='blue')
+        line=dict(dash='dash')
     ))
     
+    # Set all years on the x-axis
+    all_years = list(df_avg_year['tahun'].unique()) + list(df_proj['tahun'].unique())
+    all_years = sorted(set(all_years))
+    
+    fig.update_xaxes(
+        tickmode='array',
+        tickvals=all_years
+    )
+    
+    # Layout
     fig.update_layout(
         title='Prediksi BPIH (Multivariate Linear Regression + Proyeksi Komponen)',
         xaxis_title='Tahun',
         yaxis_title='BPIH (Rupiah)',
-        yaxis_tickformat=',',
-        legend=dict(x=0.01, y=0.99),
-        hovermode='x unified',
-        height=500
+        legend_title='Keterangan',
+        template='plotly_white'
     )
     
     st.plotly_chart(fig, use_container_width=True, height=200)
