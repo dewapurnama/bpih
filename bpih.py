@@ -198,7 +198,7 @@ with tab0:
             textposition='auto',
             textangle=0,
             textfont=dict(size=10, color="white"),
-            marker_color="#e07b39"
+            marker_color="#e49c27"
         ))
         
         # Bipih bar
@@ -207,8 +207,8 @@ with tab0:
             y=df_grouped["bipih_mio"],
             name="Bipih",
             text=[f'{x:.2f} jt' for x in df_grouped["bipih_mio"]],
-            textposition='inside',  textangle=0,
-            marker_color="#4a8db7"
+            textposition='inside',  textangle=0, textfont=dict(size=10, color="white"),
+            marker_color="#0b3286"
         ))
         
         # Total label outside (on top of full stacked bar)
@@ -247,70 +247,37 @@ with tab0:
         
         st.plotly_chart(fig1, use_container_width=True, height=200, key="bpih_left")
     with col2:
-        # Group by year, take mean of bipih and nm
-        df["tahun"] = df["tahun"].astype(str)
-        df_grouped = df.groupby("tahun")[["bipih", "nm"]].mean().reset_index()
-    
-        # Optional: convert values to millions for readability
-        df_grouped["bipih_mio"] = df_grouped["bipih"] / 1e6
-        df_grouped["nm_mio"] = df_grouped["nm"] / 1e6
-        df_grouped["tahun"] = df_grouped["tahun"].astype(str)
-        df_grouped["total_mio"] = df_grouped["bipih_mio"] + df_grouped["nm_mio"]
+        # Calculate the sum per year
+        df_grouped["total"] = df_grouped["bipih"] + df_grouped["nm"]
+        df_grouped["bipih_pct"] = df_grouped["bipih"] / df_grouped["total"] * 100
+        df_grouped["nm_pct"] = df_grouped["nm"] / df_grouped["total"] * 100
+        
         
         fig2 = go.Figure()
         
-        # NM bar
+        # NM percentage bar
         fig2.add_trace(go.Bar(
-            x=df_grouped["tahun"],
-            y=df_grouped["nm_mio"],
-            name="NM",
-            text=[f'{x:.2f} jt' for x in df_grouped["nm_mio"]],
-            textposition='auto',
-            textangle=0,
-            textfont=dict(size=10, color="white"),
-            marker_color="#e07b39"
+            x=df_grouped["tahun"], y=df_grouped["nm_pct"], name="NM", text=[f'{x:.1f}%' for x in df_grouped["nm_pct"]],
+            textposition='auto', textfont=dict(size=10, color="white"), marker_color="#e49c27"
         ))
         
-        # Bipih bar
+        # Bipih percentage bar
         fig2.add_trace(go.Bar(
-            x=df_grouped["tahun"],
-            y=df_grouped["bipih_mio"],
-            name="Bipih",
-            text=[f'{x:.2f} jt' for x in df_grouped["bipih_mio"]],
-            textposition='inside',  textangle=0,
-            marker_color="#4a8db7"
+            x=df_grouped["tahun"], y=df_grouped["bipih_pct"], name="Bipih", text=[f'{x:.1f}%' for x in df_grouped["bipih_pct"]],
+            textposition='inside', textfont=dict(size=10, color="white"), marker_color="#0b3286"
         ))
         
-        # Total label outside (on top of full stacked bar)
-        fig2.add_trace(go.Scatter(
-            x=df_grouped["tahun"],
-            y=df_grouped["total_mio"] + 2,  # Shift label above bar
-            mode='text',
-            text=[f'{x:.2f} jt' for x in df_grouped["total_mio"]],
-            textfont=dict(size=10, color="black"),
-            showlegend=False
-        ))
-        
+        # Layout
         fig2.update_layout(
             barmode='stack',
             title=dict(
-                text="Komponen BPIH (Dalam Juta)",
-                x=0.5,
-                xanchor='center',
-                font=dict(size=18)
+                text="Komposisi BPIH per Tahun (Dalam Persen)", x=0.5, font=dict(size=18)
             ),
-            xaxis=dict(
-                title="Tahun",
-                tickmode='linear'
-            ),
-            yaxis_title="Rata-rata (Jutaan Rp)",
+            xaxis_title="Tahun",
+            yaxis_title="Persentase (%)",
+            yaxis=dict(range=[0, 100]),
             legend=dict(
-                orientation='h',
-                yanchor='bottom',
-                y=1.05,
-                xanchor='center',
-                x=0.5,
-                title=None
+                orientation='h', yanchor='bottom', y=1.05, xanchor='center', x=0.5, title=None
             ),
             template="seaborn"
         )
