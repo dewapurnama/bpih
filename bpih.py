@@ -187,10 +187,10 @@ with tab0:
         df_grouped["tahun"] = df_grouped["tahun"].astype(str)
         df_grouped["total_mio"] = df_grouped["bipih_mio"] + df_grouped["nm_mio"]
         
-        fig = go.Figure()
+        fig1 = go.Figure()
         
         # NM bar
-        fig.add_trace(go.Bar(
+        fig1.add_trace(go.Bar(
             x=df_grouped["tahun"],
             y=df_grouped["nm_mio"],
             name="NM",
@@ -202,7 +202,7 @@ with tab0:
         ))
         
         # Bipih bar
-        fig.add_trace(go.Bar(
+        fig1.add_trace(go.Bar(
             x=df_grouped["tahun"],
             y=df_grouped["bipih_mio"],
             name="Bipih",
@@ -212,7 +212,7 @@ with tab0:
         ))
         
         # Total label outside (on top of full stacked bar)
-        fig.add_trace(go.Scatter(
+        fig1.add_trace(go.Scatter(
             x=df_grouped["tahun"],
             y=df_grouped["total_mio"] + 2,  # Shift label above bar
             mode='text',
@@ -221,7 +221,7 @@ with tab0:
             showlegend=False
         ))
         
-        fig.update_layout(
+        fig1.update_layout(
             barmode='stack',
             title=dict(
                 text="Komponen BPIH (Dalam Juta)",
@@ -245,7 +245,7 @@ with tab0:
             template="seaborn"
         )
         
-    st.plotly_chart(fig, use_container_width=True, height=200, key="bpih_left")
+    st.plotly_chart(fig1, use_container_width=True, height=200, key="bpih_left")
     with col2:
         # Group by year, take mean of bipih and nm
         df["tahun"] = df["tahun"].astype(str)
@@ -257,10 +257,10 @@ with tab0:
         df_grouped["tahun"] = df_grouped["tahun"].astype(str)
         df_grouped["total_mio"] = df_grouped["bipih_mio"] + df_grouped["nm_mio"]
         
-        fig = go.Figure()
+        fig2 = go.Figure()
         
         # NM bar
-        fig.add_trace(go.Bar(
+        fig2.add_trace(go.Bar(
             x=df_grouped["tahun"],
             y=df_grouped["nm_mio"],
             name="NM",
@@ -272,7 +272,7 @@ with tab0:
         ))
         
         # Bipih bar
-        fig.add_trace(go.Bar(
+        fig2.add_trace(go.Bar(
             x=df_grouped["tahun"],
             y=df_grouped["bipih_mio"],
             name="Bipih",
@@ -282,7 +282,7 @@ with tab0:
         ))
         
         # Total label outside (on top of full stacked bar)
-        fig.add_trace(go.Scatter(
+        fig2.add_trace(go.Scatter(
             x=df_grouped["tahun"],
             y=df_grouped["total_mio"] + 2,  # Shift label above bar
             mode='text',
@@ -291,7 +291,7 @@ with tab0:
             showlegend=False
         ))
         
-        fig.update_layout(
+        fig2.update_layout(
             barmode='stack',
             title=dict(
                 text="Komponen BPIH (Dalam Juta)",
@@ -315,4 +315,4 @@ with tab0:
             template="seaborn"
         )
         
-    st.plotly_chart(fig, use_container_width=True, height=200, key="bpih_right")
+    st.plotly_chart(fig2, use_container_width=True, height=200, key="bpih_right")
