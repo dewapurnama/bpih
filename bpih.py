@@ -31,6 +31,10 @@ df = pd.DataFrame({"tahun": [2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 201
 
 tab0, tab1, tab2, tab3 = st.tabs(["Dashboard", "Regional Analysis", "AI Predictions", "Data Documentation"])
 
+tab0.markdown(
+    "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
+    unsafe_allow_html=True
+)
 with tab0:
     # ----- Statistik -----
     col1, col2, col3, col4 = st.columns(4)
@@ -42,11 +46,6 @@ with tab0:
         st.metric("🟣 Growth Normal", "8.5%", "", border=True)
     with col4:
         st.metric("📍 Jakarta 2026", "Rp 58.242.366", "Confidence: 90%", border=True)
-    
-tab0.markdown(
-    "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
-    unsafe_allow_html=True
-)
 
 with tab0:
     # Group by year, take mean of bipih and nm
