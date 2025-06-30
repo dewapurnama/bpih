@@ -50,6 +50,10 @@ with tab0:
         st.metric("📍 BPIH 2026", "Rp 93.577.403", "Confidence: 90%", border=True)
 
 with tab0:
+    tab0.markdown(
+    "<h1 style='font-size:25px;'>📊 Data Historis dan Proyeksi BPIH</h1>",
+    unsafe_allow_html=True
+    )
     # Average BIPIH per year across all embarkasi
     df_avg_year = df.groupby('tahun')[["kurs_usd", "kurs_sar", 'bpih', 'bipih', 'nm', "bpih_pesawat", "bpih_akom_mak", 
                                    "bpih_akom_mad", "bpih_lainnya"]].mean().reset_index()
@@ -155,11 +159,16 @@ with tab0:
     
     # Layout
     fig.update_layout(
-        title='Prediksi BPIH (Multivariate Linear Regression + Proyeksi Komponen)',
-        xaxis_title='Tahun',
-        yaxis_title='BPIH (Rupiah)',
-        legend_title='Keterangan',
-        template='plotly_white'
+    xaxis_title='Tahun',
+    yaxis_title='BPIH (Rupiah)',
+     legend=dict(
+        orientation='h',       # horizontal layout
+        yanchor='bottom',
+        y=1.02,                # place above the chart
+        xanchor='center',
+        x=0.5
+    ),
+    template='plotly_white'
     )
     
     st.plotly_chart(fig, use_container_width=True, height=200)
