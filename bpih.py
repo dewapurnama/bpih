@@ -27,6 +27,7 @@ df = tab0.file_uploader("Upload Data Terbaru Disini", type=['xls', 'xlsx'])
 if df is not None:
     df = pd.read_excel(df)
 
+with tab0:
     # Group by year, take mean of bipih and nm
     df["tahun"] = df["tahun"].astype(str)
     df_grouped = df.groupby("tahun")[["bipih", "nm"]].mean().reset_index()
